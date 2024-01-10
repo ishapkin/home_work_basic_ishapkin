@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
-func getSquare(blackCase bool) string {
-	if blackCase {
+// Функция типа клетки
+func getSquare(isBlack *bool) string {
+	*isBlack = !*isBlack
+	if *isBlack {
 		return "#"
 	}
 	return " "
@@ -14,21 +15,21 @@ func getSquare(blackCase bool) string {
 
 func main() {
 	var size int
-	blackMode := false
+	isBlack := true
 	fmt.Println("Введите размерность доски:")
 	fmt.Scanf("%d", &size)
-	loopSize := int(math.Pow(float64(size), 2))
-	for i := 1; i <= loopSize; i++ {
-		blackMode = !blackMode
-		if i%2 == 0 {
-			if i%(loopSize/size) == 0 {
-				fmt.Println("|" + getSquare(blackMode) + "|")
-				blackMode = !blackMode
-			} else {
-				fmt.Print("|" + getSquare(blackMode))
+	// Обход строки
+	for row := 1; row <= size; row++ {
+		// Обход колонки
+		for col := 1; col < size; col++ {
+			fmt.Print("|" + getSquare(&isBlack))
+			if (col + 1) == size {
+				fmt.Println("|" + getSquare(&isBlack) + "|")
 			}
-		} else {
-			fmt.Print("|" + getSquare(blackMode))
+		}
+		// Если количетсво четное - то дополнительно переключаем тип клетки
+		if size%2 == 0 {
+			isBlack = !isBlack
 		}
 	}
 }
