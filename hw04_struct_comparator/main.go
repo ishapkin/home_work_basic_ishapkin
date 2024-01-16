@@ -16,52 +16,52 @@ type Book struct {
 
 // Getters and setters for Book
 
-func id(b Book) int {
-	return b.id
-}
-
 func (b *Book) SetID(id int) {
 	b.id = id
 }
 
-func title(b Book) string {
-	return b.title
+func (b *Book) ID() int {
+	return b.id
 }
 
 func (b *Book) SetTitle(title string) {
 	b.title = title
 }
 
-func author(b Book) string {
-	return b.author
+func (b *Book) Title() string {
+	return b.title
 }
 
 func (b *Book) SetAuthor(author string) {
 	b.author = author
 }
 
-func year(b Book) int {
-	return b.year
+func (b *Book) Author() string {
+	return b.author
 }
 
 func (b *Book) SetYear(year int) {
 	b.year = year
 }
 
-func size(b Book) int {
-	return b.size
+func (b *Book) Year() int {
+	return b.year
 }
 
 func (b *Book) SetSize(size int) {
 	b.size = size
 }
 
-func rate(b Book) float64 {
-	return b.rate
+func (b *Book) Size() int {
+	return b.size
 }
 
 func (b *Book) SetRate(rate float64) {
 	b.rate = rate
+}
+
+func (b *Book) Rate() float64 {
+	return b.rate
 }
 
 const (
@@ -117,12 +117,12 @@ func printResult(fBook Book, sBook Book, compareBook *CompareBook) {
 			adv = "младше"
 		}
 	}
-	fmt.Println(fBook.title + " " + adv + " чем " + sBook.title)
+	fmt.Println(fBook.Title() + " " + adv + " чем " + sBook.Title())
 }
 
 func main() {
 	fBook := Book{1, "«Война и Мир»", "Лев Толстой", 1873, 1300, 4.5}
-	sBook := Book{2, "«Идиот»", "Федор Достоевский", 1869, 637, 4.9}
+	sBook := Book{2, "«Идиот»", "Федор Достоевский", 1869, 350, 4.9}
 	printResult(fBook, sBook, newCompareBook("year"))
 	printResult(fBook, sBook, newCompareBook("rate"))
 	printResult(fBook, sBook, newCompareBook("size"))
