@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"reflect"
 )
 
 type Book struct {
@@ -78,40 +77,44 @@ type CompareBook struct {
 
 // Compare constructor
 
-func newCompareBook(compareMode string) *CompareBook {
+func NewCompareBook(compareMode string) *CompareBook {
 	if compareMode == Year || compareMode == Size || compareMode == Rate {
 		return &CompareBook{compareMode}
 	}
 	return &CompareBook{Year}
 }
 
-func (c *CompareBook) isCompare(firstBook Book, secondBook Book) bool {
+func (c *CompareBook) IsCompare(firstBook Book, secondBook Book) bool {
 	mode := c.compareMode
-	firstVal := reflect.ValueOf(firstBook).FieldByName(mode)
-	secondVal := reflect.ValueOf(secondBook).FieldByName(mode)
-	if mode == Rate {
-		return firstVal.Float() > secondVal.Float()
+	isCompare := false
+	switch mode {
+	case Rate:
+		isCompare = firstBook.rate > secondBook.rate
+	case Size:
+		isCompare = firstBook.size > secondBook.size
+	case Year:
+		isCompare = firstBook.year > secondBook.year
 	}
-	return firstVal.Int() > secondVal.Int()
+	return isCompare
 }
 
 func printResult(fBook Book, sBook Book, compareBook *CompareBook) {
 	adv := ""
 	switch compareBook.compareMode {
 	case Rate:
-		if compareBook.isCompare(fBook, sBook) {
+		if compareBook.IsCompare(fBook, sBook) {
 			adv = "выше рейтингом"
 		} else {
 			adv = "ниже рейтингом"
 		}
 	case Size:
-		if compareBook.isCompare(fBook, sBook) {
+		if compareBook.IsCompare(fBook, sBook) {
 			adv = "больше"
 		} else {
 			adv = "меньше"
 		}
 	default:
-		if compareBook.isCompare(fBook, sBook) {
+		if compareBook.IsCompare(fBook, sBook) {
 			adv = "старше"
 		} else {
 			adv = "младше"
@@ -123,7 +126,7 @@ func printResult(fBook Book, sBook Book, compareBook *CompareBook) {
 func main() {
 	fBook := Book{1, "«Война и Мир»", "Лев Толстой", 1873, 1300, 4.5}
 	sBook := Book{2, "«Идиот»", "Федор Достоевский", 1869, 350, 4.9}
-	printResult(fBook, sBook, newCompareBook("year"))
-	printResult(fBook, sBook, newCompareBook("rate"))
-	printResult(fBook, sBook, newCompareBook("size"))
+	printResult(fBook, sBook, NewCompareBook("year"))
+	printResult(fBook, sBook, NewCompareBook("rate"))
+	printResult(fBook, sBook, NewCompareBook("size"))
 }
