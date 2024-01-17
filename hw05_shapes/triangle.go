@@ -20,6 +20,6 @@ func (t *Triangle) SetH(h float64) {
 	t.h = h
 }
 
-func (r Triangle) area() float64 {
-	return 0.5 * r.A() * r.H()
+func (t Triangle) area() float64 {
+	return 0.5 * t.A() * t.H()
 }
