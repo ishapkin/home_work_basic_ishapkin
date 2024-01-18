@@ -7,7 +7,7 @@ import (
 
 func calculateArea(s any) (float64, error) {
 	if shape, ok := s.(Shape); ok {
-		return shape.area(), nil
+		return shape.Area(), nil
 	}
 	return 0, errors.New("переданный объект не реализует интерфейс Shape")
 }

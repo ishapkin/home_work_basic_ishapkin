@@ -20,6 +20,6 @@ func (r *Rectangle) SetB(b float64) {
 	r.b = b
 }
 
-func (r Rectangle) area() float64 {
+func (r Rectangle) Area() float64 {
 	return r.A() * r.B()
 }
